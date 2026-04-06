@@ -86,7 +86,7 @@ export default function Home() {
             {darkMode ? "\u2600" : "\u263E"}
           </button>
           <div className="banner-content">
-            <img src="/icon.png" alt="Koskimize" className="banner-icon" />
+            <img src="/logo.png" alt="Koskimize" className="banner-icon" />
             <div className="banner-text">
               <h1 className="banner-title">Koskimize</h1>
               <p className="banner-sub">
