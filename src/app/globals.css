@@ -400,7 +400,6 @@ html, body {
 /* ── Header banner ── */
 .header-banner {
   position: relative;
-  margin-bottom: 48px;
 }
 
 .header-banner .theme-toggle {
