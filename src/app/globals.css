@@ -340,8 +340,7 @@ html, body {
 }
 
 .empty-state-icon {
-  font-size: 32px;
-  opacity: 0.3;
+  opacity: 0.25;
 }
 
 .empty-state-text {
