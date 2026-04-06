@@ -39,35 +39,43 @@ Your output must:
 export const AI_TARGETS = {
   claude: {
     label: "Claude",
-    hint: "Target: Anthropic Claude. Use your knowledge of Claude's strengths and preferred prompting patterns.",
+    hint: `Target: Anthropic Claude.
+Key traits: excels at following complex, layered instructions. Handles XML tags well for structuring input (<context>, <task>, <constraints>). Strong at nuanced reasoning, long-form analysis, and maintaining consistency across lengthy outputs. Responds well to explicit role assignments and detailed constraints.`,
   },
   gemini: {
     label: "Gemini",
-    hint: "Target: Google Gemini. Use your knowledge of Gemini's strengths and preferred prompting patterns.",
+    hint: `Target: Google Gemini.
+Key traits: strong at multimodal tasks, broad general knowledge, and structured reasoning. Responds well to clear markdown formatting (headers, numbered lists, bold). Handles step-by-step breakdowns effectively. Good at synthesis across multiple topics and comparative analysis.`,
   },
   grok: {
     label: "Grok",
-    hint: "Target: xAI Grok. Use your knowledge of Grok's strengths and preferred prompting patterns.",
+    hint: `Target: xAI Grok.
+Key traits: direct and conversational tone. Has access to real-time information from X/Twitter. Responds well to concise, straightforward instructions without excessive formality. Can handle humor and informal requests. Best when given clear context about intent and desired depth.`,
   },
   chatgpt: {
     label: "ChatGPT",
-    hint: "Target: OpenAI ChatGPT. Use your knowledge of ChatGPT's strengths and preferred prompting patterns.",
+    hint: `Target: OpenAI ChatGPT.
+Key traits: strong at role-playing assigned personas. Responds well to "You are a..." openers and system-instruction style phrasing. Handles chain-of-thought prompting ("think step by step"). Good with few-shot examples. Performs well with explicit format/length/style specifications.`,
   },
   llama: {
     label: "LLaMA",
-    hint: "Target: Meta LLaMA. Use your knowledge of LLaMA's strengths and preferred prompting patterns.",
+    hint: `Target: Meta LLaMA.
+Key traits: open-source model, instruction-tuned. Works best with clear, flat, sequential instructions — avoid deeply nested structures. Explicit role and task definitions improve output quality. Benefits from concrete examples when the expected format is non-obvious. Keep instructions unambiguous and direct.`,
   },
   copilot: {
     label: "GitHub Copilot",
-    hint: "Target: GitHub Copilot. Use your knowledge of Copilot's code-centric strengths and preferred prompting patterns.",
+    hint: `Target: GitHub Copilot.
+Key traits: code-centric AI. Expects programming context: language, framework, version. Responds best to technical specifications — function signatures, type definitions, input/output contracts, edge cases. Structure prompts as detailed technical requirements or well-commented code stubs that it can continue from.`,
   },
   mistral: {
     label: "Mistral",
-    hint: "Target: Mistral AI. Use your knowledge of Mistral's strengths and preferred prompting patterns.",
+    hint: `Target: Mistral AI.
+Key traits: strong at reasoning and concise, focused tasks. Performs best with precise, well-scoped instructions. Handles structured prompts with clear sections (objective, context, constraints, expected output). Benefits from logical step breakdowns for complex reasoning tasks. Prefers brevity over verbosity.`,
   },
   perplexity: {
     label: "Perplexity",
-    hint: "Target: Perplexity AI. Use your knowledge of Perplexity's research-oriented strengths and preferred prompting patterns.",
+    hint: `Target: Perplexity AI.
+Key traits: research-oriented AI with web access and source citation. Optimized for information retrieval and synthesis. Frame prompts as research queries. Specify desired depth (overview vs deep-dive), ask for sources when relevant, and structure complex topics as sub-questions. Good at comparing multiple viewpoints.`,
   },
 } as const;
 
