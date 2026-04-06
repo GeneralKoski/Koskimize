@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
-import { AI_TARGETS, AiTarget, GUARD } from "@/lib/prompts";
+import { AI_TARGETS, AiTarget, GUARD, buildSystemPrompt } from "@/lib/prompts";
 
 export async function POST(request: NextRequest) {
   const groq = new Groq({
@@ -16,14 +16,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Text is required" }, { status: 400 });
   }
 
-  const target = AI_TARGETS[targetAi];
-  if (!target) {
+  if (!AI_TARGETS[targetAi]) {
     return NextResponse.json({ error: "Invalid AI target" }, { status: 400 });
   }
 
   const chatCompletion = await groq.chat.completions.create({
     messages: [
-      { role: "system", content: GUARD + target.systemPrompt },
+      { role: "system", content: GUARD + buildSystemPrompt(targetAi) },
       { role: "user", content: text },
     ],
     model: "llama-3.3-70b-versatile",
