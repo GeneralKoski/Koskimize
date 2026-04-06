@@ -15,7 +15,12 @@ import {
   ConfigProvider,
   theme,
 } from "antd";
-import { CopyOutlined, ThunderboltOutlined } from "@ant-design/icons";
+import {
+  CopyOutlined,
+  ThunderboltOutlined,
+  SunOutlined,
+  MoonOutlined,
+} from "@ant-design/icons";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -25,6 +30,10 @@ const AI_OPTIONS = [
   { value: "gemini", label: "Gemini" },
   { value: "grok", label: "Grok" },
   { value: "chatgpt", label: "ChatGPT" },
+  { value: "llama", label: "LLaMA" },
+  { value: "copilot", label: "GitHub Copilot" },
+  { value: "mistral", label: "Mistral" },
+  { value: "perplexity", label: "Perplexity" },
 ];
 
 export default function Home() {
@@ -32,6 +41,7 @@ export default function Home() {
   const [outputText, setOutputText] = useState("");
   const [targetAi, setTargetAi] = useState("claude");
   const [loading, setLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleConvert = async () => {
     if (!inputText.trim()) {
@@ -71,7 +81,7 @@ export default function Home() {
   return (
     <ConfigProvider
       theme={{
-        algorithm: theme.defaultAlgorithm,
+        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {
           colorPrimary: "#6c5ce7",
           borderRadius: 8,
@@ -79,15 +89,42 @@ export default function Home() {
         },
       }}
     >
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "32px 24px" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <Title level={2} style={{ marginBottom: 4 }}>
-            <ThunderboltOutlined style={{ marginRight: 8, color: "#6c5ce7" }} />
-            Koskimize
-          </Title>
-          <Text type="secondary">
-            Converti il tuo testo in prompt ottimizzati per qualsiasi AI
-          </Text>
+      <div
+        style={{
+          maxWidth: 1400,
+          margin: "0 auto",
+          padding: "32px 24px",
+          minHeight: "100vh",
+          background: darkMode ? "#141414" : "#f5f5f5",
+          transition: "background 0.3s",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 40,
+          }}
+        >
+          <div style={{ width: 40 }} />
+          <div style={{ textAlign: "center" }}>
+            <Title level={2} style={{ marginBottom: 4 }}>
+              <ThunderboltOutlined
+                style={{ marginRight: 8, color: "#6c5ce7" }}
+              />
+              Koskimize
+            </Title>
+            <Text type="secondary">
+              Converti il tuo testo in prompt ottimizzati per qualsiasi AI
+            </Text>
+          </div>
+          <Button
+            type="text"
+            size="large"
+            icon={darkMode ? <SunOutlined /> : <MoonOutlined />}
+            onClick={() => setDarkMode(!darkMode)}
+          />
         </div>
 
         <Row gutter={24}>
