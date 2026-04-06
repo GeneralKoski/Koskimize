@@ -1,6 +1,6 @@
 "use client";
 
-import { ConfigProvider, message, theme } from "antd";
+import { App, ConfigProvider, theme } from "antd";
 import { useEffect, useState } from "react";
 
 const AI_OPTIONS = [
@@ -15,12 +15,7 @@ const AI_OPTIONS = [
 ];
 
 export default function Home() {
-  const [inputText, setInputText] = useState("");
-  const [outputText, setOutputText] = useState("");
-  const [targetAi, setTargetAi] = useState("claude");
-  const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -28,6 +23,34 @@ export default function Home() {
       darkMode ? "dark" : "light",
     );
   }, [darkMode]);
+
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+        token: { colorPrimary: "#6366f1", borderRadius: 10, fontSize: 14 },
+      }}
+    >
+      <App>
+        <MainContent darkMode={darkMode} setDarkMode={setDarkMode} />
+      </App>
+    </ConfigProvider>
+  );
+}
+
+function MainContent({
+  darkMode,
+  setDarkMode,
+}: {
+  darkMode: boolean;
+  setDarkMode: (v: boolean) => void;
+}) {
+  const { message } = App.useApp();
+  const [inputText, setInputText] = useState("");
+  const [outputText, setOutputText] = useState("");
+  const [targetAi, setTargetAi] = useState("claude");
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleConvert = async () => {
     if (!inputText.trim()) {
@@ -67,12 +90,6 @@ export default function Home() {
   };
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        token: { colorPrimary: "#6366f1", borderRadius: 10, fontSize: 14 },
-      }}
-    >
       <div className="app-container">
         <header className="header-banner">
           <button
@@ -178,6 +195,5 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </ConfigProvider>
   );
 }
