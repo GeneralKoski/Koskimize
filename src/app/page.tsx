@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { message, ConfigProvider, theme } from "antd";
+import { ConfigProvider, message, theme } from "antd";
+import { useEffect, useState } from "react";
 
 const AI_OPTIONS = [
   { value: "claude", label: "Claude" },
@@ -25,7 +25,7 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
-      darkMode ? "dark" : "light"
+      darkMode ? "dark" : "light",
     );
   }, [darkMode]);
 
@@ -53,7 +53,7 @@ export default function Home() {
       setOutputText(data.prompt);
     } catch (err) {
       message.error(
-        err instanceof Error ? err.message : "Errore nella conversione"
+        err instanceof Error ? err.message : "Errore nella conversione",
       );
     } finally {
       setLoading(false);
@@ -86,15 +86,11 @@ export default function Home() {
             {darkMode ? "\u2600" : "\u263E"}
           </button>
           <div className="banner-content">
-            <img src="/logo.png" alt="Koskimize" className="banner-icon" />
-            <div className="banner-text">
-              <h1 className="banner-title">Koskimize</h1>
-              <p className="banner-sub">
-                Trasforma le tue idee in prompt perfetti per qualsiasi AI
-              </p>
-            </div>
+            <h1 className="banner-title">Koskimize</h1>
+            <p className="banner-sub">
+              Trasforma le tue idee in prompt perfetti per qualsiasi AI
+            </p>
           </div>
-          <div className="banner-line" />
         </header>
 
         <div className="split-layout">
@@ -160,7 +156,17 @@ export default function Home() {
                 <div className="output-area">{outputText}</div>
               ) : (
                 <div className="empty-state">
-                  <svg className="empty-state-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="empty-state-icon"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
                     <polyline points="14 2 14 8 20 8" />
                     <line x1="16" y1="13" x2="8" y2="13" />
