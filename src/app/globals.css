@@ -398,44 +398,74 @@ html, body {
   min-height: 100vh;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* ── Header banner ── */
+.header-banner {
+  position: relative;
   margin-bottom: 48px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.header-banner .theme-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
-.logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+.banner-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+  gap: 16px;
+  padding: 8px 0 24px;
 }
 
-.logo-text {
-  font-size: 20px;
+.banner-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(99, 102, 241, 0.25);
+}
+
+.banner-text {
+  text-align: center;
+}
+
+.banner-title {
+  font-family: var(--font-body);
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
   color: var(--text-primary);
+  margin: 0;
 }
 
-.logo-sub {
-  font-size: 12px;
-  color: var(--text-muted);
-  letter-spacing: 0.3px;
-  margin-top: 1px;
+.banner-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 6px 0 0;
+  letter-spacing: 0.2px;
+}
+
+.banner-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent-1) 30%,
+    var(--accent-2) 70%,
+    transparent 100%
+  );
+  opacity: 0.3;
+}
+
+@media (max-width: 900px) {
+  .banner-title {
+    font-size: 24px;
+  }
+
+  .banner-icon {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .split-layout {

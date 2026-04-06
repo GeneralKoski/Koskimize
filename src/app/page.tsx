@@ -77,14 +77,7 @@ export default function Home() {
       <div className="dot-grid" />
 
       <div className="app-container">
-        <header className="header fade-in">
-          <div className="logo">
-            <div className="logo-mark">K</div>
-            <div>
-              <div className="logo-text">Koskimize</div>
-              <div className="logo-sub">prompt optimizer</div>
-            </div>
-          </div>
+        <header className="header-banner fade-in">
           <button
             className="theme-toggle"
             onClick={() => setDarkMode(!darkMode)}
@@ -92,6 +85,16 @@ export default function Home() {
           >
             {darkMode ? "\u2600" : "\u263E"}
           </button>
+          <div className="banner-content">
+            <img src="/icon.png" alt="Koskimize" className="banner-icon" />
+            <div className="banner-text">
+              <h1 className="banner-title">Koskimize</h1>
+              <p className="banner-sub">
+                Trasforma le tue idee in prompt perfetti per qualsiasi AI
+              </p>
+            </div>
+          </div>
+          <div className="banner-line" />
         </header>
 
         <div className="split-layout">
