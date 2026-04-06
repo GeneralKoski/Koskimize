@@ -1,29 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Button,
-  Input,
-  Select,
-  Typography,
-  message,
-  Spin,
-  Card,
-  Row,
-  Col,
-  Space,
-  ConfigProvider,
-  theme,
-} from "antd";
-import {
-  CopyOutlined,
-  ThunderboltOutlined,
-  SunOutlined,
-  MoonOutlined,
-} from "@ant-design/icons";
-
-const { TextArea } = Input;
-const { Title, Text } = Typography;
+import { useState, useEffect } from "react";
+import { message, ConfigProvider, theme } from "antd";
 
 const AI_OPTIONS = [
   { value: "claude", label: "Claude" },
@@ -31,7 +9,7 @@ const AI_OPTIONS = [
   { value: "grok", label: "Grok" },
   { value: "chatgpt", label: "ChatGPT" },
   { value: "llama", label: "LLaMA" },
-  { value: "copilot", label: "GitHub Copilot" },
+  { value: "copilot", label: "Copilot" },
   { value: "mistral", label: "Mistral" },
   { value: "perplexity", label: "Perplexity" },
 ];
@@ -41,7 +19,15 @@ export default function Home() {
   const [outputText, setOutputText] = useState("");
   const [targetAi, setTargetAi] = useState("claude");
   const [loading, setLoading] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
 
   const handleConvert = async () => {
     if (!inputText.trim()) {
@@ -50,6 +36,7 @@ export default function Home() {
     }
 
     setLoading(true);
+    setOutputText("");
     try {
       const res = await fetch("/api/convert", {
         method: "POST",
@@ -75,154 +62,110 @@ export default function Home() {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(outputText);
-    message.success("Prompt copiato!");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <ConfigProvider
       theme={{
         algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        token: {
-          colorPrimary: "#6c5ce7",
-          borderRadius: 8,
-          fontSize: 15,
-        },
+        token: { colorPrimary: "#6366f1", borderRadius: 10, fontSize: 14 },
       }}
     >
-      <div
-        style={{
-          maxWidth: 1400,
-          margin: "0 auto",
-          padding: "32px 24px",
-          minHeight: "100vh",
-          background: darkMode ? "#141414" : "#f5f5f5",
-          transition: "background 0.3s",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 40,
-          }}
-        >
-          <div style={{ width: 40 }} />
-          <div style={{ textAlign: "center" }}>
-            <Title level={2} style={{ marginBottom: 4 }}>
-              <ThunderboltOutlined
-                style={{ marginRight: 8, color: "#6c5ce7" }}
-              />
-              Koskimize
-            </Title>
-            <Text type="secondary">
-              Converti il tuo testo in prompt ottimizzati per qualsiasi AI
-            </Text>
+      <div className="mesh-bg" />
+      <div className="dot-grid" />
+
+      <div className="app-container">
+        <header className="header fade-in">
+          <div className="logo">
+            <div className="logo-mark">K</div>
+            <div>
+              <div className="logo-text">Koskimize</div>
+              <div className="logo-sub">prompt optimizer</div>
+            </div>
           </div>
-          <Button
-            type="text"
-            size="large"
-            icon={darkMode ? <SunOutlined /> : <MoonOutlined />}
+          <button
+            className="theme-toggle"
             onClick={() => setDarkMode(!darkMode)}
-          />
-        </div>
+            aria-label="Toggle theme"
+          >
+            {darkMode ? "\u2600" : "\u263E"}
+          </button>
+        </header>
 
-        <Row gutter={24}>
-          <Col xs={24} lg={12}>
-            <Card
-              title="Input"
-              styles={{ header: { borderBottom: "2px solid #6c5ce7" } }}
-            >
-              <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-                <Select
-                  value={targetAi}
-                  onChange={setTargetAi}
-                  options={AI_OPTIONS}
-                  style={{ width: "100%" }}
-                  size="large"
-                />
-                <TextArea
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Scrivi qui il tuo testo..."
-                  rows={16}
-                  style={{ resize: "none" }}
-                />
-                <Button
-                  type="primary"
-                  size="large"
-                  block
-                  onClick={handleConvert}
-                  loading={loading}
-                  icon={<ThunderboltOutlined />}
-                >
-                  Converti
-                </Button>
-              </Space>
-            </Card>
-          </Col>
-
-          <Col xs={24} lg={12}>
-            <Card
-              title="Prompt ottimizzato"
-              styles={{ header: { borderBottom: "2px solid #6c5ce7" } }}
-              extra={
-                outputText && (
-                  <Button
-                    icon={<CopyOutlined />}
-                    onClick={handleCopy}
-                    type="text"
+        <div className="split-layout">
+          {/* ── Input Panel ── */}
+          <div className="glass-panel fade-in fade-in-delay-1">
+            <div className="panel-header">
+              <span className="panel-label">Input</span>
+            </div>
+            <div className="panel-body">
+              <div className="chip-grid" style={{ marginBottom: 16 }}>
+                {AI_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    className={`ai-chip ${targetAi === opt.value ? "active" : ""}`}
+                    onClick={() => setTargetAi(opt.value)}
                   >
-                    Copia
-                  </Button>
-                )
-              }
-            >
-              {loading ? (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    minHeight: 380,
-                  }}
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              <textarea
+                className="input-area"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Descrivi cosa vuoi chiedere all'AI..."
+              />
+
+              <div className="char-count">{inputText.length} caratteri</div>
+
+              <button
+                className="convert-btn"
+                onClick={handleConvert}
+                disabled={loading || !inputText.trim()}
+                style={{ marginTop: 16 }}
+              >
+                <span>{loading ? "Conversione..." : "Converti"}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* ── Output Panel ── */}
+          <div className="glass-panel fade-in fade-in-delay-2">
+            <div className="panel-header">
+              <span className="panel-label">Prompt ottimizzato</span>
+              {outputText && (
+                <button
+                  className={`copy-btn ${copied ? "copied" : ""}`}
+                  onClick={handleCopy}
                 >
-                  <Spin size="large" />
+                  {copied ? "\u2713 Copiato" : "Copia"}
+                </button>
+              )}
+            </div>
+            <div className="panel-body">
+              {loading ? (
+                <div className="loading-dots">
+                  <span />
+                  <span />
+                  <span />
                 </div>
               ) : outputText ? (
-                <pre
-                  style={{
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-word",
-                    margin: 0,
-                    fontFamily: "inherit",
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    minHeight: 380,
-                    maxHeight: 500,
-                    overflowY: "auto",
-                  }}
-                >
-                  {outputText}
-                </pre>
+                <div className="output-area">{outputText}</div>
               ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    minHeight: 380,
-                    color: "#bbb",
-                  }}
-                >
-                  <Text type="secondary">
+                <div className="empty-state">
+                  <div className="empty-state-icon">{"\u2728"}</div>
+                  <div className="empty-state-text">
                     Il prompt ottimizzato apparir&agrave; qui
-                  </Text>
+                  </div>
                 </div>
               )}
-            </Card>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
       </div>
     </ConfigProvider>
   );
