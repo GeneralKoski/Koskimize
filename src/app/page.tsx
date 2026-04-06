@@ -73,11 +73,8 @@ export default function Home() {
         token: { colorPrimary: "#6366f1", borderRadius: 10, fontSize: 14 },
       }}
     >
-      <div className="mesh-bg" />
-      <div className="dot-grid" />
-
       <div className="app-container">
-        <header className="header-banner fade-in">
+        <header className="header-banner">
           <button
             className="theme-toggle"
             onClick={() => setDarkMode(!darkMode)}
@@ -95,7 +92,7 @@ export default function Home() {
 
         <div className="split-layout">
           {/* ── Input Panel ── */}
-          <div className="glass-panel fade-in fade-in-delay-1">
+          <div className="panel">
             <div className="panel-header">
               <span className="panel-label">Input</span>
             </div>
@@ -133,7 +130,7 @@ export default function Home() {
           </div>
 
           {/* ── Output Panel ── */}
-          <div className="glass-panel fade-in fade-in-delay-2">
+          <div className="panel">
             <div className="panel-header">
               <span className="panel-label">Prompt ottimizzato</span>
               {outputText && (
