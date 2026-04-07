@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Koskimize",
-  description: "Convert human text into optimized AI prompts",
+  description: "Trasforma le tue idee in prompt ottimizzati per qualsiasi AI",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="it">
       <body>
         <AntdRegistry>{children}</AntdRegistry>
       </body>

@@ -13,31 +13,38 @@ export async function POST(request: NextRequest) {
   };
 
   if (!text?.trim()) {
-    return NextResponse.json({ error: "Text is required" }, { status: 400 });
+    return NextResponse.json({ error: "Il testo è obbligatorio" }, { status: 400 });
   }
 
   if (!AI_TARGETS[targetAi]) {
-    return NextResponse.json({ error: "Invalid AI target" }, { status: 400 });
+    return NextResponse.json({ error: "Modello AI non valido" }, { status: 400 });
   }
 
-  const chatCompletion = await groq.chat.completions.create({
-    messages: [
-      { role: "system", content: GUARD + buildSystemPrompt(targetAi) },
-      { role: "user", content: text },
-    ],
-    model: "llama-3.3-70b-versatile",
-    temperature: 0.7,
-    max_tokens: 4096,
-  });
+  try {
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { role: "system", content: GUARD + buildSystemPrompt(targetAi) },
+        { role: "user", content: text },
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_tokens: 4096,
+    });
 
-  const result = chatCompletion.choices[0]?.message?.content?.trim() || "";
+    const result = chatCompletion.choices[0]?.message?.content?.trim() || "";
 
-  if (result === "REJECTED") {
+    if (result === "REJECTED") {
+      return NextResponse.json(
+        { error: "Il testo inserito non descrive un task da delegare a un'AI. Scrivi cosa vuoi far fare all'AI, non una domanda diretta." },
+        { status: 422 }
+      );
+    }
+
+    return NextResponse.json({ prompt: result });
+  } catch {
     return NextResponse.json(
-      { error: "Il testo inserito non descrive un task da delegare a un'AI. Scrivi cosa vuoi far fare all'AI, non una domanda diretta." },
-      { status: 422 }
+      { error: "Errore di comunicazione con il servizio AI. Riprova tra qualche istante." },
+      { status: 500 }
     );
   }
-
-  return NextResponse.json({ prompt: result });
 }
